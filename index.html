@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta
+      name="description"
+      content="Starbooth: a whimsical little photobooth that runs entirely in your browser."
+    />
+    <title>starbooth</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%27-11 -11 22 22%27%3E%3Cpath d=%27M0-10L2.4-3.3 9.5-3.1 3.8 1.2 5.9 8.1 0 4-5.9 8.1-3.8 1.2-9.5-3.1-2.4-3.3Z%27 fill=%27%23ffd23f%27 stroke=%27%232e2c3b%27/%3E%3C/svg%3E"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Reenie+Beanie&family=Cutive+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <canvas id="spark"></canvas>
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+      <defs>
+        <symbol id="st" viewBox="-11 -11 22 22">
+          <path
+            d="M0-10L2.4-3.3 9.5-3.1 3.8 1.2 5.9 8.1 0 4 -5.9 8.1 -3.8 1.2 -9.5-3.1 -2.4-3.3Z"
+            stroke="#2e2c3b"
+            stroke-width="1"
+            stroke-linejoin="round"
+          />
+        </symbol>
+      </defs>
+    </svg>
+    <main>
+      <svg
+        class="deco"
+        style="left: -6px; top: 30px"
+        width="150"
+        height="90"
+        viewBox="0 0 150 90"
+        fill="none"
+        stroke-linecap="round"
+        stroke-width="3"
+      >
+        <path d="M6 60C20 20 40 80 58 40S92 10 112 48" stroke="#ff8fb7" />
+        <path d="M14 78C40 70 70 84 120 70" stroke="#9ccc65" opacity=".8" />
+      </svg>
+      <svg
+        class="deco"
+        style="right: -4px; top: 20px"
+        width="130"
+        height="100"
+        viewBox="0 0 130 100"
+        fill="none"
+        stroke-linecap="round"
+        stroke-width="3"
+      >
+        <path d="M10 30C30 5 50 55 70 25S100 60 122 20" stroke="#8cc8ff" />
+        <path d="M96 70c10-8 20 6 8 10s-14-10-4-14" stroke="#ff8fb7" />
+      </svg>
+      <svg class="deco star" style="left: 18%; top: 8px; color: #ffd23f" width="34" height="34">
+        <use href="#st" fill="#ffd23f" />
+      </svg>
+      <svg
+        class="deco star"
+        style="right: 17%; top: 96px; animation-delay: 1s"
+        width="24"
+        height="24"
+      >
+        <use href="#st" fill="#ff8fb7" />
+      </svg>
+      <svg
+        class="deco star"
+        style="left: 8%; top: 150px; animation-delay: 2s"
+        width="20"
+        height="20"
+      >
+        <use href="#st" fill="#8cc8ff" />
+      </svg>
+
+      <header>
+        <h1>starbooth</h1>
+        <svg
+          width="260"
+          height="18"
+          viewBox="0 0 260 18"
+          fill="none"
+          stroke="#ffd23f"
+          stroke-width="4"
+          stroke-linecap="round"
+          style="margin-top: -4px"
+        >
+          <path d="M6 10C50 3 90 15 130 8S210 4 254 10" />
+        </svg>
+        <p class="tag">step in, strike a pose, catch a star</p>
+      </header>
+      <nav class="nav">
+        <button class="navb" id="nav-booth" aria-pressed="true">booth</button
+        ><button class="navb" id="nav-book" aria-pressed="false">
+          my stars <span id="cnt"></span>
+        </button>
+      </nav>
+
+      <div class="booth" id="boothPage">
+        <section class="screen" aria-label="camera">
+          <div class="view" id="view">
+            <div class="light" id="light"></div>
+            <video id="vid" playsinline muted></video>
+            <div class="ph" id="ph">
+              <svg
+                width="90"
+                height="90"
+                viewBox="0 0 90 90"
+                fill="none"
+                stroke="#8cc8ff"
+                stroke-width="2.4"
+                stroke-linecap="round"
+              >
+                <path
+                  d="M45 45c3-3 7 1 4 4-5 5-13-2-8-9 7-9 20 2 12 13-10 13-30-3-18-19 14-19 40 4 24 26"
+                />
+              </svg>
+              <div class="big">the booth is sleepy</div>
+              <span>wake the camera to begin</span>
+              <button class="btn" id="camBtn">open camera</button>
+              <label class="chip" style="cursor: pointer"
+                >or upload photos<input class="sr" type="file" id="file" accept="image/*" multiple
+              /></label>
+            </div>
+            <div id="prompt"></div>
+            <div id="count"></div>
+            <div id="flash"></div>
+          </div>
+          <div class="row"><button class="btn big" id="go" disabled>snap!</button></div>
+          <div class="msg" id="msg"></div>
+          <div class="tray" id="tray"></div>
+        </section>
+
+        <aside class="side" aria-label="settings">
+          <div class="grp">
+            <h3>layout</h3>
+            <div class="chips" id="g-layout"></div>
+          </div>
+          <div class="grp">
+            <h3>filter</h3>
+            <div class="chips" id="g-filter"></div>
+          </div>
+          <div class="grp">
+            <h3>countdown</h3>
+            <div class="chips" id="g-timer"></div>
+          </div>
+          <div class="grp">
+            <h3>little extras</h3>
+            <div class="chips">
+              <button class="chip" id="t-prompt" aria-pressed="false">pose prompts</button
+              ><button class="chip" id="t-sound" aria-pressed="true">shutter sound</button>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      <section id="result" aria-live="polite">
+        <div class="stripwrap"><img id="out" alt="your starbooth photos" /></div>
+        <aside class="side" aria-label="finishing touches">
+          <h2>ta-da!</h2>
+          <div class="grp" style="color: var(--soft)">
+            a little piece of magic. add some finishing touches:
+          </div>
+          <div class="grp">
+            <h3>frame</h3>
+            <div class="chips" id="g-frame"></div>
+          </div>
+          <div class="grp">
+            <h3>extras</h3>
+            <div class="chips">
+              <button class="chip" id="t-stars" aria-pressed="true">stars</button
+              ><button class="chip" id="t-cap" aria-pressed="true">caption</button>
+            </div>
+          </div>
+          <div class="grp">
+            <h3>doodles</h3>
+            <div class="chips" id="g-stk"></div>
+            <div class="chips" style="margin-top: 10px">
+              <button class="chip" id="stk-undo">undo</button
+              ><button class="chip" id="stk-clear">clear</button>
+            </div>
+            <p class="hint">tap one to add it, drag it to move, tap it again to resize</p>
+          </div>
+          <div class="row">
+            <button class="btn big" id="save">save it</button
+            ><button class="btn" id="keep">keep in my stars</button
+            ><button class="btn" id="again">shoot again</button>
+          </div>
+          <div class="msg" id="smsg"></div>
+        </aside>
+      </section>
+      <section id="sbook" aria-label="my stars">
+        <h2>my stars</h2>
+        <p>kept privately on this device. nobody else can see them.</p>
+        <div id="sempty" style="margin-top: 40px; color: var(--soft)">
+          no stars yet. keep a photostrip from the booth and it will twinkle here.
+        </div>
+        <div id="sgrid"></div>
+      </section>
+      <div id="toast" role="status"></div>
+      <div id="lb">
+        <img id="lbimg" alt="saved photostrip" />
+        <div class="row" style="margin-top: 6px">
+          <button class="btn" id="lb-save">save</button
+          ><button class="btn" id="lb-del">remove</button
+          ><button class="btn" id="lb-close">close</button>
+        </div>
+        <div class="msg" id="lbmsg"></div>
+      </div>
+      <footer>your photos never leave your device</footer>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
