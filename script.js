@@ -1,4 +1,6 @@
 /**
+ * Starbooth. Copyright (c) 2026 amymainali. All rights reserved.
+ *
  * Starbooth: a whimsical photobooth that runs entirely in the browser.
  * No server, no accounts. Photos are processed in memory and only leave
  * the page when the person chooses to save or download them.
