@@ -7,9 +7,8 @@ with doodles and keep your favourites. No sign-ups, no uploads, no fuss.
 
 ### 👉 [Open Starbooth](https://amymainali.github.io/starbooth/)
 
-<!-- Tip: add a screenshot by uploading it to this repository and uncommenting the line below.
-![Starbooth screenshot](screenshot.png)
--->
+![Starbooth screenshot](starbooth.png)
+<img src="starbooth.png" alt="Starbooth screenshot" width="600">
 
 ## What you can do
 
@@ -39,4 +38,4 @@ without written permission. See [LICENSE](LICENSE).
 
 ---
 
-Made with stardust and a wobbly hand ✧
+Made with a sprinkle of stardust  ݁⋆⭒˚.⋆
