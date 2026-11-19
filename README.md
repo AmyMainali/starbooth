@@ -8,7 +8,6 @@ with doodles and keep your favourites. No sign-ups, no uploads, no fuss.
 ### 👉 [Open Starbooth](https://amymainali.github.io/starbooth/)
 
 ![Starbooth screenshot](starbooth.png)
-<img src="starbooth.png" alt="Starbooth screenshot" width="600">
 
 ## What you can do
 
